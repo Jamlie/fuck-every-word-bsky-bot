@@ -4,6 +4,7 @@ import { CronJob } from "cron";
 import * as process from "process";
 import * as fs from "fs/promises";
 import * as path from "path";
+import express from "express";
 
 dotenv.config();
 
@@ -31,19 +32,41 @@ async function main() {
         password: process.env.BSKY_PASSWORD!,
     });
 
-    const word = await getRandomWord();
+    let word: string | undefined = "you";
+    try {
+        word = await getRandomWord();
+    } catch {
+        console.error("couldn't get a word");
+    }
 
-    await agent.post({
-        text: `fuck ${word}`,
-        createdAt: new Date().toISOString(),
-    });
+    if (!word) {
+        word = "you";
+    }
 
-    console.log("just posted!");
+    if (word) {
+        await agent.post({
+            text: `fuck ${word}`,
+            createdAt: new Date().toISOString(),
+        });
+        console.log("just posted!");
+    } else {
+        console.error("Could not post. No word available.");
+    }
 }
-main();
 
-const scheduleExpressionEveryHour = "0 */1 * * *";
+const scheduleExpressionEveryHour = "* * * * *";
 
 const job = new CronJob(scheduleExpressionEveryHour, main);
 
 job.start();
+
+const app = express();
+
+app.get("/", (_req, res) => {
+    res.send("Server is running! Cron job is active.");
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});

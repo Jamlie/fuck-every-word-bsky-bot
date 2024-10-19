@@ -1,20 +1,22 @@
 {
-    "name": "bsky",
-    "module": "index.ts",
-    "type": "module",
-    "scripts": {
-        "build": "bun build --target=bun --outfile=./src/index.js ./src/index.ts --minify",
-        "dev": "bun run src/index.js"
-    },
-    "devDependencies": {
-        "@types/bun": "latest"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
-    },
-    "dependencies": {
-        "@atproto/api": "^0.13.12",
-        "cron": "^3.1.7",
-        "dotenv": "^16.4.5"
-    }
+  "name": "bsky",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "build": "bun build --target=bun --outfile=./src/index.js ./src/index.ts --minify",
+    "dev": "bun run src/index.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.13.12",
+    "@types/express": "^5.0.0",
+    "cron": "^3.1.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  }
 }
