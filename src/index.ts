@@ -54,7 +54,7 @@ async function main() {
     }
 }
 
-const scheduleExpressionEveryHour = "* * * * *";
+const scheduleExpressionEveryHour = "0 */3 * * *";
 
 const job = new CronJob(scheduleExpressionEveryHour, main);
 
